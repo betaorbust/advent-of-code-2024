@@ -102,33 +102,30 @@ export class Vector {
 	}
 }
 
+export type GridDirections = 'N' | 'S' | 'E' | 'W';
+export type AllGridDirections = GridDirections | 'NW' | 'SW' | 'NE' | 'SE';
+
 // Move around a grid. Type safe returns because it throws
 // if it goes out of bounds.
 export function traverseGrid<T>(
 	grid: T[][],
 	current: [number, number],
-	amount: ['up' | 'right' | 'down' | 'left', number],
+	amount: [AllGridDirections, number],
 ): { address: [number, number]; value: T } {
 	const [directionName, magnitude] = amount;
 	const [row, column] = current;
 	let [dRow, dColumn] = [0, 0];
-	switch (directionName) {
-		case 'up': {
-			dRow = -1;
-			break;
-		}
-		case 'right': {
-			dColumn = 1;
-			break;
-		}
-		case 'down': {
-			dRow = 1;
-			break;
-		}
-		case 'left': {
-			dColumn = -1;
-			break;
-		}
+	if (directionName.includes('N')) {
+		dRow = -1;
+	}
+	if (directionName.includes('S')) {
+		dRow = 1;
+	}
+	if (directionName.includes('W')) {
+		dColumn = -1;
+	}
+	if (directionName.includes('E')) {
+		dColumn = 1;
 	}
 	const [newRow, newColumn] = [
 		row + dRow * magnitude,
@@ -351,7 +348,7 @@ export class Grid<T> {
 
 	move(
 		current: GridEntry<T>,
-		direction: 'up' | 'right' | 'down' | 'left',
+		direction: Parameters<typeof traverseGrid>[2][0],
 		amount = 1,
 	) {
 		return traverseGrid(
@@ -381,5 +378,9 @@ export class Grid<T> {
 
 	getColumns() {
 		return transposeGrid(this.grid);
+	}
+
+	map<U>(fn: (entry: GridEntry<T>) => U) {
+		return gridMap(this.grid, (entry) => fn(entry));
 	}
 }

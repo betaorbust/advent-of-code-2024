@@ -121,11 +121,15 @@ describe('traverseGrid', () => {
 			[4, 5, 6],
 			[7, 8, 9],
 		];
-		expect(traverseGrid(grid, [0, 0], ['right', 2])).toEqual({
+		expect(traverseGrid(grid, [0, 0], ['E', 2])).toEqual({
 			value: 3,
 			address: [0, 2],
 		});
-		expect(() => traverseGrid(grid, [0, 0], ['left', 2])).toThrow();
+		expect(traverseGrid(grid, [0, 0], ['SE', 2])).toEqual({
+			value: 9,
+			address: [2, 2],
+		});
+		expect(() => traverseGrid(grid, [0, 0], ['W', 2])).toThrow();
 	});
 });
 
