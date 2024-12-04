@@ -41,10 +41,12 @@ export function extractValues(input: string, match: RegExp) {
 export const cartesianProduct = <T extends any[][]>(
 	incomingArrays: [...T],
 ): Array<{ [K in keyof T]: T[K][number] }> =>
+	// These are extending from any, but then cast down in the return statement
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 	incomingArrays.reduce((a, b) =>
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		a.flatMap((d) => b.map((e) => [d, e].flat())),
 	);
-
 /**
  * Least common multiple of multiple numbers
  */
@@ -126,9 +128,6 @@ export function traverseGrid<T>(
 		case 'left': {
 			dColumn = -1;
 			break;
-		}
-		default: {
-			throw new Error(`Unknown direction ${directionName}`);
 		}
 	}
 	const [newRow, newColumn] = [
@@ -347,7 +346,7 @@ export class Grid<T> {
 	) {
 		return getNeighborAddresses(this.grid, [row, column], includeDiagonals)
 			.map(([thisRow, thisCol]) => this.grid[thisRow]?.[thisCol])
-			.filter((entry) => entry !== undefined) as GridEntry<T>[];
+			.filter((entry) => entry !== undefined);
 	}
 
 	move(

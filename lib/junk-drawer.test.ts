@@ -1,12 +1,12 @@
 import {
 	arrayPartition,
-	leastCommonMultiple,
 	cartesianProduct,
-	setIntersection,
-	traverseGrid,
 	getAddressOnGrid,
 	getNeighbors,
+	leastCommonMultiple,
+	setIntersection,
 	spliceString,
+	traverseGrid,
 } from './junk-drawer.ts';
 
 describe('setUnion', () => {
