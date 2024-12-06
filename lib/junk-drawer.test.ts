@@ -1,4 +1,5 @@
 import {
+	Grid,
 	arrayPartition,
 	cartesianProduct,
 	getAddressOnGrid,
@@ -178,4 +179,20 @@ describe('spliceString', () => {
 			);
 		},
 	);
+});
+
+describe('Grid class', () => {
+	it('should find an element correctly', () => {
+		const grid = new Grid([
+			[1, 2, 3],
+			[4, 5, 6],
+			[7, 8, 9],
+		]);
+		expect(grid.find((entry) => entry.value === 5)).toEqual({
+			value: 5,
+			id: '1,1',
+			row: 1,
+			column: 1,
+		});
+	});
 });

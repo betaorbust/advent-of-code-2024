@@ -102,15 +102,20 @@ export class Vector {
 	}
 }
 
-export type GridDirections = 'N' | 'S' | 'E' | 'W';
-export type AllGridDirections = GridDirections | 'NW' | 'SW' | 'NE' | 'SE';
+export type GridDirection = 'N' | 'S' | 'E' | 'W';
+export type GridDirectionWithDiagonals =
+	| GridDirection
+	| 'NW'
+	| 'SW'
+	| 'NE'
+	| 'SE';
 
 // Move around a grid. Type safe returns because it throws
 // if it goes out of bounds.
 export function traverseGrid<T>(
 	grid: T[][],
 	current: [number, number],
-	amount: [AllGridDirections, number],
+	amount: [GridDirectionWithDiagonals, number],
 ): { address: [number, number]; value: T } {
 	const [directionName, magnitude] = amount;
 	const [row, column] = current;
@@ -308,7 +313,6 @@ export function isNotNullish<T>(value: T): value is NonNullable<T> {
 export type GridEntry<T> = {
 	value: T;
 	id: string;
-	neighbors: null | GridEntry<T>[];
 	row: number;
 	column: number;
 };
@@ -332,7 +336,6 @@ export class Grid<T> {
 				id: `${row},${column}`,
 				row,
 				column,
-				neighbors: null,
 			};
 		});
 	}
@@ -382,5 +385,19 @@ export class Grid<T> {
 
 	map<U>(fn: (entry: GridEntry<T>) => U) {
 		return gridMap(this.grid, (entry) => fn(entry));
+	}
+
+	find(predicate: (entry: GridEntry<T>) => boolean) {
+		for (const row of this.grid) {
+			const found = row.find(predicate);
+			if (found) {
+				return found;
+			}
+		}
+		return null;
+	}
+
+	clone() {
+		return new Grid(this.grid.map((row) => row.map((entry) => entry.value)));
 	}
 }
