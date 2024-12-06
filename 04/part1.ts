@@ -1,4 +1,8 @@
-import { AllGridDirections, Grid, GridEntry } from '../lib/junk-drawer.ts';
+import {
+	Grid,
+	GridDirectionWithDiagonals,
+	GridEntry,
+} from '../lib/junk-drawer.ts';
 
 /**
  Part 1
@@ -8,7 +12,7 @@ export const hasWord = (
 	board: Grid<string>,
 	current: GridEntry<string>,
 	word: string,
-	direction: AllGridDirections,
+	direction: GridDirectionWithDiagonals,
 ): boolean => {
 	try {
 		if (current.value !== word[0]) {
