@@ -376,7 +376,11 @@ export class Grid<T> {
 				`Address ${row}, ${column} is out of bounds for grid of size ${this.grid.length} x ${this.grid[0].length}`,
 			);
 		}
-		return this.grid[row][column];
+		const element = this.grid[row]?.[column];
+		if (element === undefined) {
+			throw new Error(`No element at ${row}, ${column}`);
+		}
+		return element;
 	}
 
 	getColumns() {
@@ -387,14 +391,18 @@ export class Grid<T> {
 		return gridMap(this.grid, (entry) => fn(entry));
 	}
 
+	forEach(fn: (entry: GridEntry<T>) => void) {
+		this.grid.flat().forEach((el) => {
+			fn(el);
+		});
+	}
+
 	find(predicate: (entry: GridEntry<T>) => boolean) {
-		for (const row of this.grid) {
-			const found = row.find(predicate);
-			if (found) {
-				return found;
-			}
-		}
-		return null;
+		this.grid.flat().find((el) => predicate(el));
+	}
+
+	findAll(predicate: (entry: GridEntry<T>) => boolean) {
+		return this.grid.flat().filter((el) => predicate(el));
 	}
 
 	clone() {
