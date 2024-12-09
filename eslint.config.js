@@ -25,6 +25,14 @@ export default tseslint.config(
 			// actually going wrong for other reasons.
 			'@typescript-eslint/no-unsafe-assignment': 'off',
 
+			// Love this rule but it obfuscates squigglies when things are
+			// actually going wrong for other reasons.
+			'@typescript-eslint/no-unsafe-return': 'off',
+
+			// Love this rule but it obfuscates squigglies when things are
+			// actually going wrong for other reasons.
+			'@typescript-eslint/no-unsafe-argument': 'off',
+
 			// typof new String('foo') === 'object' 😬
 			'no-new-wrappers': 'error',
 			camelcase: [
