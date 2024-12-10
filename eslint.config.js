@@ -17,20 +17,11 @@ export default tseslint.config(
 	},
 	{
 		rules: {
-			// Love this rule but it obfuscates squigglies when things are
+			// Love these rules but they obfuscate squigglies when things are
 			// actually going wrong for other reasons.
 			'@typescript-eslint/no-unsafe-call': 'off',
-
-			// Love this rule but it obfuscates squigglies when things are
-			// actually going wrong for other reasons.
 			'@typescript-eslint/no-unsafe-assignment': 'off',
-
-			// Love this rule but it obfuscates squigglies when things are
-			// actually going wrong for other reasons.
 			'@typescript-eslint/no-unsafe-return': 'off',
-
-			// Love this rule but it obfuscates squigglies when things are
-			// actually going wrong for other reasons.
 			'@typescript-eslint/no-unsafe-argument': 'off',
 
 			// typof new String('foo') === 'object' 😬
